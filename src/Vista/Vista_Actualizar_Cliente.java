@@ -5,19 +5,34 @@
  */
 package Vista;
 
+import Controlador.Cliente_Procedimiento;
+
+import Modelo.Cliente;
+import TablasVista.Lista_Tabla_Cliente;
+import java.util.List;
+
 /**
  *
  * @author JC
  */
 public class Vista_Actualizar_Cliente extends javax.swing.JFrame {
 
+    Cliente_Procedimiento cliente= new Cliente_Procedimiento();
+    Cliente clie= new Cliente();
     /**
      * Creates new form Vista_Actualizar_Cliente
      */
     public Vista_Actualizar_Cliente() {
         initComponents();
+        ListarTabla();
     }
-
+     private void ListarTabla() {
+        List<Cliente> listas =cliente.listado();
+        jTable1.setModel(new Lista_Tabla_Cliente(listas));
+        jTable1.getRowSorter();
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -76,9 +91,19 @@ public class Vista_Actualizar_Cliente extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jButton5.setText("Actualizar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -138,6 +163,15 @@ public class Vista_Actualizar_Cliente extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        clie = ((Lista_Tabla_Cliente) jTable1.getModel()).DameCliente(jTable1.getSelectedRow());
+ 
+    }//GEN-LAST:event_jTable1MouseClicked
 
     /**
      * @param args the command line arguments

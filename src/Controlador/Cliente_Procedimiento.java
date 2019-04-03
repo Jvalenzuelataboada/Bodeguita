@@ -19,7 +19,7 @@ public class Cliente_Procedimiento {
         try {
             con = conexion.getConecion();
             con.setAutoCommit(false);
-            cstm = con.prepareCall("{Call AgregarCliente(?,?)}");
+            cstm = con.prepareCall("{Call guardar_cliente(?,?)}");
             cstm.setString(1, cli.getNombre_Cliente());
             cstm.setString(2, cli.getSexo());
             resp = cstm.execute();
@@ -32,18 +32,18 @@ public class Cliente_Procedimiento {
         return resp;
     }
 
-    public boolean UpdatePersona(Persona per) {
+    public boolean UpdateCliente(Cliente Cli) {
         Connection con = null;
         CallableStatement cstm = null;
         boolean resp = true;
         try {
             con = conexion.getConecion();
             con.setAutoCommit(false);
-            cstm = con.prepareCall("{Call UpdatePersona(?,?,?,?)}");
-            cstm.setString(1, per.getNombre());
-            cstm.setString(2, per.getApellidoP());
-            cstm.setString(3, per.getApellidoM());
-            cstm.setInt(4, per.getIdpers());
+            cstm = con.prepareCall("{Call actualizar_cliente(?,?,?)}");
+            cstm.setString(1, Cli.getNombre_Cliente());
+            cstm.setString(2, Cli.getSexo());
+            cstm.setBoolean(3, Cli.isEstado());
+            // cstm.setInt(4, per.getIdpers());
             resp = cstm.execute();
             con.commit();
         } catch (Exception e) {
@@ -54,7 +54,7 @@ public class Cliente_Procedimiento {
         return resp;
     }
 
-    public boolean DeletePersona(Persona per) {
+  /* public boolean DeletePersona(Persona per) {
         Connection con = null;
         CallableStatement cstm = null;
         boolean resp = true;
@@ -72,25 +72,25 @@ public class Cliente_Procedimiento {
         }
         return resp;
     }
-
-    public List<Persona> listado() {
+*/
+    public List<Cliente> listado() {
         Connection con = null;
         CallableStatement cstm = null;
         ResultSet rs = null;
-        List<Persona> lista = null;
+        List<Cliente> lista = null;
         try {
             lista = new ArrayList<>();
             con = conexion.getConecion();
-            cstm = con.prepareCall("{Call Listar}");
+            cstm = con.prepareCall("{Call mostrar_cliente}");
             rs = cstm.executeQuery();
-            Persona per = null;
+            Cliente cli = null;
             while (rs.next()) {
-                per = new Persona();
-                per.setIdpers(rs.getInt("idpersona"));
-                per.setNombre(rs.getString("nombre"));
-                per.setApellidoP(rs.getString("apellidoP"));
-                per.setApellidoM(rs.getString("apellidoM"));
-                lista.add(per);
+                cli = new Cliente();
+                cli.setCodigo_Cliente(rs.getInt("Codigo_Cliente"));
+                cli.setNombre_Cliente(rs.getString("Nombre_Cliente"));
+                cli.setSexo(rs.getString("Sexo"));
+                cli.setEstado(rs.getBoolean("Estado"));
+                lista.add(cli);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -99,6 +99,4 @@ public class Cliente_Procedimiento {
         }
         return lista;
     }
-
-}
 }

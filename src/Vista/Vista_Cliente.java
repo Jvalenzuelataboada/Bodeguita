@@ -5,6 +5,10 @@
  */
 package Vista;
 
+import Controlador.Cliente_Procedimiento;
+import Modelo.Cliente;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author JC
@@ -33,7 +37,7 @@ public class Vista_Cliente extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txt_nombre_cliente = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -50,6 +54,11 @@ public class Vista_Cliente extends javax.swing.JFrame {
         jLabel3.setText("Sexo :");
 
         jButton1.setText("Agregar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Limpiar");
 
@@ -89,7 +98,7 @@ public class Vista_Cliente extends javax.swing.JFrame {
                                 .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextField1)))
+                                .addComponent(txt_nombre_cliente)))
                         .addContainerGap())))
         );
         layout.setVerticalGroup(
@@ -100,7 +109,7 @@ public class Vista_Cliente extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_nombre_cliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -116,6 +125,23 @@ public class Vista_Cliente extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String sexo="";
+        if (jComboBox2.getSelectedIndex()==0) {
+            sexo="Masculino";
+        }else{
+            sexo="Femenino";
+        }
+        Cliente client = new Cliente(txt_nombre_cliente.getText(), sexo);
+        Cliente_Procedimiento cp= new Cliente_Procedimiento();
+        boolean resp = cp.AgregarPersona(client);
+        if (resp == false) {
+            JOptionPane.showMessageDialog(null, "Dato Agregdo");
+        } else {
+            JOptionPane.showMessageDialog(null, "Dato no Agregdo");
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -164,6 +190,6 @@ public class Vista_Cliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField txt_nombre_cliente;
     // End of variables declaration//GEN-END:variables
 }
